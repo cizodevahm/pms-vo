@@ -73,7 +73,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'status' => 'required|in:Pending,In Progress,Completed',
-            'due_date' => 'required|date|after_or_equal:today',
+            'due_date' => 'required|date',
         ]);
 
         $task->update($validated);
@@ -84,7 +84,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
     }
 }
