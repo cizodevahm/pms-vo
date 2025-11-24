@@ -51,18 +51,18 @@
                             </div>
 
                             <div>
-                                <label for="team_member_id" class="block text-sm font-medium text-gray-700">Assign
+                                <label for="user_id" class="block text-sm font-medium text-gray-700">Assign
                                     To</label>
-                                <select name="team_member_id" id="team_member_id"
+                                <select name="user_id" id="user_id"
                                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option value="">Select Team Member</option>
-                                    @foreach($teamMembers as $member)
-                                        <option value="{{ $member->id }}" {{ old('team_member_id') == $member->id ? 'selected' : '' }}>
-                                            {{ $member->name }} ({{ $member->role }})
+                                    <option value="">Select User</option>
+                                    @foreach($users as $user)
+                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }} ({{ $user->role }})
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('team_member_id')
+                                @error('user_id')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

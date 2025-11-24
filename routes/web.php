@@ -18,24 +18,17 @@ Route::get('/access-denied', function () {
 Route::middleware(['auth', 'verified', 'company.email'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Projects - only Project Manager and Super Admin can create/edit/delete
-    Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::resource('projects', ProjectController::class);
 
-    Route::middleware(['role:Project Manager,Super Admin'])->group(function () {
-        Route::get('projects/create', [ProjectController::class, 'create'])->name('projects.create');
-        Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
-        Route::get('projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-        Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-        Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-    });
+    // Team Members routes - custom routes for User-based show method
+    Route::get('/team-members', [TeamMemberController::class, 'index'])->name('team-members.index');
+    Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('team-members.create');
+    Route::post('/team-members', [TeamMemberController::class, 'store'])->name('team-members.store');
+    Route::get('/team-members/user/{user}', [TeamMemberController::class, 'show'])->name('team-members.show');
+    Route::get('/team-members/{teamMember}/edit', [TeamMemberController::class, 'edit'])->name('team-members.edit');
+    Route::patch('/team-members/{teamMember}', [TeamMemberController::class, 'update'])->name('team-members.update');
+    Route::delete('/team-members/{teamMember}', [TeamMemberController::class, 'destroy'])->name('team-members.destroy');
 
-    // Team Members - only Super Admin can manage
-    Route::middleware(['role:Super Admin'])->group(function () {
-        Route::resource('team-members', TeamMemberController::class);
-    });
-
-    // Tasks - all authenticated users can manage
     Route::resource('tasks', TaskController::class);
 });
 

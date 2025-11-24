@@ -4,10 +4,12 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Team Members') }}
             </h2>
-            <a href="{{ route('team-members.create') }}"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Add Team Member
-            </a>
+            @if($canManage)
+                <a href="{{ route('team-members.create') }}"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Add Team Member
+                </a>
+            @endif
         </div>
     </x-slot>
 
@@ -21,45 +23,47 @@
 
             <x-card>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @forelse ($teamMembers as $member)
+                    @forelse ($users as $user)
                         <div
                             class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-200">
                             <div class="flex items-center space-x-4">
-                                @if($member->profile_photo)
-                                    <img src="{{ asset('storage/' . $member->profile_photo) }}" alt="{{ $member->name }}"
+                                @if($user->teamMember && $user->teamMember->profile_photo)
+                                    <img src="{{ asset('storage/' . $user->teamMember->profile_photo) }}" alt="{{ $user->name }}"
                                         class="w-16 h-16 rounded-full object-cover">
                                 @else
                                     <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-                                        <span class="text-gray-500 text-lg font-medium">{{ substr($member->name, 0, 2) }}</span>
+                                        <span class="text-gray-500 text-lg font-medium">{{ substr($user->name, 0, 2) }}</span>
                                     </div>
                                 @endif
                                 <div class="flex-1">
-                                    <h3 class="text-lg font-medium text-gray-900">{{ $member->name }}</h3>
-                                    <p class="text-sm text-gray-500">{{ $member->email }}</p>
+                                    <h3 class="text-lg font-medium text-gray-900">{{ $user->name }}</h3>
+                                    <p class="text-sm text-gray-500">{{ $user->email }}</p>
                                     <span
                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mt-1">
-                                        {{ $member->role }}
+                                        {{ $user->getRole() }}
                                     </span>
                                 </div>
                             </div>
 
                             <div class="mt-4">
                                 <div class="text-sm text-gray-600 mb-3">
-                                    <span class="font-medium">{{ $member->tasks_count }}</span> tasks assigned
+                                    <span class="font-medium">{{ $user->tasks_count }}</span> tasks assigned
                                 </div>
 
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('team-members.show', $member) }}"
+                                    <a href="{{ route('team-members.show', $user) }}"
                                         class="text-indigo-600 hover:text-indigo-900 text-sm">View</a>
-                                    <a href="{{ route('team-members.edit', $member) }}"
-                                        class="text-yellow-600 hover:text-yellow-900 text-sm">Edit</a>
-                                    <form action="{{ route('team-members.destroy', $member) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Are you sure? This will also delete all assigned tasks.')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-600 hover:text-red-900 text-sm">Delete</button>
-                                    </form>
+                                    @if($canManage && $user->teamMember)
+                                        <a href="{{ route('team-members.edit', $user->teamMember) }}"
+                                            class="text-yellow-600 hover:text-yellow-900 text-sm">Edit</a>
+                                        <form action="{{ route('team-members.destroy', $user->teamMember) }}" method="POST" class="inline"
+                                            onsubmit="return confirm('Are you sure? This will also delete all assigned tasks.')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="text-red-600 hover:text-red-900 text-sm">Delete</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -73,15 +77,17 @@
                                 </svg>
                                 No team members found.
                             </div>
-                            <a href="{{ route('team-members.create') }}" class="text-blue-600 hover:text-blue-900">Add your
-                                first team member</a>
+                            @if($canManage)
+                                <a href="{{ route('team-members.create') }}" class="text-blue-600 hover:text-blue-900">Add your
+                                    first team member</a>
+                            @endif
                         </div>
                     @endforelse
                 </div>
 
-                @if($teamMembers->hasPages())
+                @if($users->hasPages())
                     <div class="mt-6">
-                        {{ $teamMembers->links() }}
+                        {{ $users->links() }}
                     </div>
                 @endif
             </x-card>

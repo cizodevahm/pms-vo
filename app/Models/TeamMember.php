@@ -16,8 +16,14 @@ class TeamMember extends Model
         'profile_photo'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
+
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        // Get tasks through the user relationship
+        return $this->hasManyThrough(Task::class, User::class, 'email', 'user_id', 'email', 'id');
     }
 }

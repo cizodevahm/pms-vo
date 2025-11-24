@@ -5,10 +5,12 @@
                 {{ $task->title }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('tasks.edit', $task) }}"
-                    class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                    Edit Task
-                </a>
+                @if($task->canBeEditedBy(auth()->user()))
+                    <a href="{{ route('tasks.edit', $task) }}"
+                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                        Edit Task
+                    </a>
+                @endif
                 <a href="{{ route('tasks.index') }}"
                     class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     Back to Tasks
@@ -81,35 +83,35 @@
                         </div>
                     </x-card>
 
-                    <!-- Team Member Info -->
+                    <!-- User Info -->
                     <x-card title="Assigned To">
                         <div class="flex items-center space-x-3">
-                            @if($task->teamMember->profile_photo)
-                                <img src="{{ asset('storage/' . $task->teamMember->profile_photo) }}"
-                                    alt="{{ $task->teamMember->name }}" class="w-12 h-12 rounded-full object-cover">
-                            @else
-                                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                                    <span
-                                        class="text-gray-500 text-sm font-medium">{{ substr($task->teamMember->name, 0, 2) }}</span>
-                                </div>
-                            @endif
+                            <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                                <span
+                                    class="text-gray-500 text-sm font-medium">{{ substr($task->user->name, 0, 2) }}</span>
+                            </div>
                             <div>
-                                <h3 class="text-sm font-medium text-gray-900">{{ $task->teamMember->name }}</h3>
-                                <p class="text-sm text-gray-500">{{ $task->teamMember->role }}</p>
-                                <p class="text-sm text-gray-500">{{ $task->teamMember->email }}</p>
+                                <h3 class="text-sm font-medium text-gray-900">{{ $task->user->name }}</h3>
+                                <p class="text-sm text-gray-500">{{ $task->user->role }}</p>
+                                <p class="text-sm text-gray-500">{{ $task->user->email }}</p>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <a href="{{ route('team-members.show', $task->teamMember) }}"
-                                class="text-indigo-600 hover:text-indigo-900 text-sm">
-                                View Profile →
-                            </a>
+                            <span class="text-gray-500 text-sm">
+                                User Profile
+                            </span>
                         </div>
                     </x-card>
 
                     <!-- Task Meta -->
                     <x-card title="Task Information">
                         <div class="space-y-2 text-sm">
+                            @if($task->creator)
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Created by:</span>
+                                    <span class="text-gray-900">{{ $task->creator->name }}</span>
+                                </div>
+                            @endif
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Created:</span>
                                 <span class="text-gray-900">{{ $task->created_at->format('M d, Y') }}</span>

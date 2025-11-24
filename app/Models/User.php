@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -53,6 +54,13 @@ class User extends Authenticatable
 
     public function hasRole($roles)
     {
+        // Check role directly from User model first
+        if ($this->role) {
+            $roles = is_array($roles) ? $roles : [$roles];
+            return in_array($this->role, $roles);
+        }
+
+        // Fallback to teamMember relationship
         $teamMember = $this->teamMember;
         if (!$teamMember) {
             return false;
@@ -60,5 +68,23 @@ class User extends Authenticatable
 
         $roles = is_array($roles) ? $roles : [$roles];
         return in_array($teamMember->role, $roles);
+    }
+
+    // Helper method to get user's role
+    public function getRole()
+    {
+        return $this->role ?? $this->teamMember?->role ?? 'No Role';
+    }
+
+    // Check if user can manage projects
+    public function canManageProjects()
+    {
+        return $this->hasRole(['Project Manager', 'Super Admin']);
+    }
+
+    // Tasks relationship
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

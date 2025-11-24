@@ -2,13 +2,15 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ $teamMember->name }}
+                {{ $user->name }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('team-members.edit', $teamMember) }}"
-                    class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
-                    Edit Member
-                </a>
+                @if($canManage && $user->teamMember)
+                    <a href="{{ route('team-members.edit', $user->teamMember) }}"
+                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                        Edit Member
+                    </a>
+                @endif
                 <a href="{{ route('team-members.index') }}"
                     class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     Back to Team
@@ -24,22 +26,21 @@
                 <div class="lg:col-span-1">
                     <x-card title="Profile">
                         <div class="text-center">
-                            @if($teamMember->profile_photo)
-                                <img src="{{ asset('storage/' . $teamMember->profile_photo) }}"
-                                    alt="{{ $teamMember->name }}" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+                            @if($user->teamMember && $user->teamMember->profile_photo)
+                                <img src="{{ asset('storage/' . $user->teamMember->profile_photo) }}"
+                                    alt="{{ $user->name }}" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
                             @else
                                 <div
                                     class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span
-                                        class="text-gray-500 text-2xl font-medium">{{ substr($teamMember->name, 0, 2) }}</span>
+                                    <span class="text-gray-500 text-2xl font-medium">{{ substr($user->name, 0, 2) }}</span>
                                 </div>
                             @endif
 
-                            <h3 class="text-xl font-medium text-gray-900 mb-1">{{ $teamMember->name }}</h3>
-                            <p class="text-gray-600 mb-2">{{ $teamMember->email }}</p>
+                            <h3 class="text-xl font-medium text-gray-900 mb-1">{{ $user->name }}</h3>
+                            <p class="text-gray-600 mb-2">{{ $user->email }}</p>
                             <span
                                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                                {{ $teamMember->role }}
+                                {{ $user->getRole() }}
                             </span>
                         </div>
 
@@ -47,11 +48,11 @@
                             <div class="text-sm text-gray-600 space-y-2">
                                 <div class="flex justify-between">
                                     <span>Member since:</span>
-                                    <span class="text-gray-900">{{ $teamMember->created_at->format('M d, Y') }}</span>
+                                    <span class="text-gray-900">{{ $user->created_at->format('M d, Y') }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span>Total tasks:</span>
-                                    <span class="text-gray-900 font-medium">{{ $teamMember->tasks_count }}</span>
+                                    <span class="text-gray-900 font-medium">{{ $user->tasks_count }}</span>
                                 </div>
                             </div>
                         </div>
@@ -61,9 +62,9 @@
                 <!-- Tasks -->
                 <div class="lg:col-span-2">
                     <x-card title="Assigned Tasks">
-                        @if($teamMember->tasks->count() > 0)
+                        @if($user->tasks->count() > 0)
                             <div class="space-y-4">
-                                @foreach($teamMember->tasks as $task)
+                                @foreach($user->tasks as $task)
                                     <div class="border border-gray-200 rounded-lg p-4">
                                         <div class="flex justify-between items-start mb-2">
                                             <div class="flex-1">
@@ -104,10 +105,12 @@
                                     </path>
                                 </svg>
                                 <p class="text-gray-500">No tasks assigned yet.</p>
-                                <a href="{{ route('tasks.create') }}"
-                                    class="text-indigo-600 hover:text-indigo-900 mt-2 inline-block">
-                                    Create a task for this member
-                                </a>
+                                @if($canManage)
+                                    <a href="{{ route('tasks.create') }}"
+                                        class="text-indigo-600 hover:text-indigo-900 mt-2 inline-block">
+                                        Create a task for this member
+                                    </a>
+                                @endif
                             </div>
                         @endif
                     </x-card>

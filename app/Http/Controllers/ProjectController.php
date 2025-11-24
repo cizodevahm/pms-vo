@@ -5,22 +5,34 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index()
     {
         $projects = Project::withCount('tasks')->paginate(10);
-        return view('projects.index', compact('projects'));
+        $canManageProjects = Auth::user()->canManageProjects();
+        return view('projects.index', compact('projects', 'canManageProjects'));
     }
 
     public function create()
     {
+        // Check if user can manage projects
+        if (!Auth::user()->canManageProjects()) {
+            abort(403, 'You don\'t have permission to create projects.');
+        }
+
         return view('projects.create');
     }
 
     public function store(Request $request)
     {
+        // Check if user can manage projects
+        if (!Auth::user()->canManageProjects()) {
+            abort(403, 'You don\'t have permission to create projects.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -46,11 +58,21 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
+        // Check if user can manage projects
+        if (!Auth::user()->canManageProjects()) {
+            abort(403, 'You don\'t have permission to edit projects.');
+        }
+
         return view('projects.edit', compact('project'));
     }
 
     public function update(Request $request, Project $project)
     {
+        // Check if user can manage projects
+        if (!Auth::user()->canManageProjects()) {
+            abort(403, 'You don\'t have permission to update projects.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -73,6 +95,11 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        // Check if user can manage projects
+        if (!Auth::user()->canManageProjects()) {
+            abort(403, 'You don\'t have permission to delete projects.');
+        }
+
         if ($project->logo) {
             Storage::disk('public')->delete($project->logo);
         }
