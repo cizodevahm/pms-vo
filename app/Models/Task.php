@@ -51,20 +51,7 @@ class Task extends Model
             return false;
         }
 
-        // Get user's actual role
-        $userRole = $user->getRole();
-
-        // Project Managers and Super Admins can edit any task
-        if ($userRole === 'Project Manager' || $userRole === 'Super Admin') {
-            return true;
-        }
-
-        // Other roles can only edit tasks they created (only if created_by is set and matches)
-        if ($this->created_by && $this->created_by === $user->id) {
-            return true;
-        }
-
-        // Default: no permission for any other case
-        return false;
+        // Allow all authenticated users to edit any task
+        return true;
     }
 }
