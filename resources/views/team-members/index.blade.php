@@ -4,12 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Team Members') }}
             </h2>
-            @if($canManage)
-                <a href="{{ route('team-members.create') }}"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add Team Member
-                </a>
-            @endif
         </div>
     </x-slot>
 
@@ -77,10 +71,7 @@
                                 </svg>
                                 No team members found.
                             </div>
-                            @if($canManage)
-                                <a href="{{ route('team-members.create') }}" class="text-blue-600 hover:text-blue-900">Add your
-                                    first team member</a>
-                            @endif
+
                         </div>
                     @endforelse
                 </div>

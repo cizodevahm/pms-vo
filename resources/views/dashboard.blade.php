@@ -96,12 +96,6 @@
                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
                             Add New Task
                         </a>
-                        @if(Auth::user()->canManageProjects())
-                            <a href="{{ route('team-members.create') }}"
-                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
-                                Add Team Member
-                            </a>
-                        @endif
                     </div>
                 </x-card>
             </div>

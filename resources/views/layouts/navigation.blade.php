@@ -24,6 +24,11 @@
                     <x-nav-link :href="route('team-members.index')" :active="request()->routeIs('team-members.*')">
                         {{ __('Team Members') }}
                     </x-nav-link>
+                    @if(Auth::user()->hasRole('Super Admin'))
+                        <x-nav-link :href="route('super-admin.dashboard')" :active="request()->routeIs('super-admin.*')">
+                            {{ __('Super Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -96,6 +101,11 @@
             <x-responsive-nav-link :href="route('team-members.index')" :active="request()->routeIs('team-members.*')">
                 {{ __('Team Members') }}
             </x-responsive-nav-link>
+            @if(Auth::user()->hasRole('Super Admin'))
+                <x-responsive-nav-link :href="route('super-admin.dashboard')" :active="request()->routeIs('super-admin.*')">
+                    {{ __('Super Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -87,4 +87,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    // Projects managed by this user
+    public function managedProjects()
+    {
+        return $this->hasMany(Project::class, 'manager_id');
+    }
 }

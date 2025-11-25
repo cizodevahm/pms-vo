@@ -37,38 +37,7 @@ class TeamMemberController extends Controller
         return view('team-members.index', compact('users', 'canManage'));
     }
 
-    public function create()
-    {
-        // Only Super Admin can create team members
-        if (!Auth::user()->hasRole('Super Admin')) {
-            abort(403, 'You don\'t have permission to create team members.');
-        }
 
-        return view('team-members.create');
-    }
-
-    public function store(Request $request)
-    {
-        // Only Super Admin can create team members
-        if (!Auth::user()->hasRole('Super Admin')) {
-            abort(403, 'You don\'t have permission to create team members.');
-        }
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:team_members,email',
-            'role' => 'required|in:Developer,Designer,QA,Project Manager,Super Admin',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        if ($request->hasFile('profile_photo')) {
-            $validated['profile_photo'] = $request->file('profile_photo')->store('team-members', 'public');
-        }
-
-        TeamMember::create($validated);
-
-        return redirect()->route('team-members.index')->with('success', 'Team member created successfully!');
-    }
 
     public function show(User $user)
     {

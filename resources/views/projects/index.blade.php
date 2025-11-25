@@ -41,6 +41,52 @@
             @endif
 
             <x-card>
+                <!-- Project Manager Filter -->
+                <div class="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <form method="GET" action="{{ route('projects.index') }}" class="flex items-center space-x-3">
+                            <label for="manager_filter" class="text-sm font-medium text-gray-700">Filter by Project
+                                Manager:</label>
+                            <select name="manager_id" id="manager_filter"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                                onchange="this.form.submit()">
+                                <option value="">All Project Managers</option>
+                                @foreach($projectManagers as $manager)
+                                    <option value="{{ $manager->id }}" {{ request('manager_id') == $manager->id ? 'selected' : '' }}>
+                                        {{ $manager->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if(request('manager_id'))
+                                <a href="{{ route('projects.index') }}"
+                                    class="text-sm text-blue-600 hover:text-blue-800 underline">
+                                    Clear Filter
+                                </a>
+                            @endif
+                        </form>
+                    </div>
+
+                    @if(request('manager_id'))
+                        @php
+                            $selectedManager = $projectManagers->find(request('manager_id'));
+                        @endphp
+                        @if($selectedManager)
+                            <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                <span>Showing projects for:</span>
+                                <div class="flex items-center space-x-2">
+                                    <div
+                                        class="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-bold">
+                                            {{ substr($selectedManager->name, 0, 2) }}
+                                        </span>
+                                    </div>
+                                    <span class="font-medium text-gray-900">{{ $selectedManager->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                </div>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -54,6 +100,9 @@
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Description</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Project Manager</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Dates</th>
@@ -71,9 +120,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($project->logo)
                                             <img src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
-                                                class="w-12 h-12 rounded-lg object-cover">
+                                                class=" w-8 h-8 rounded-lg object-cover">
                                         @else
-                                            <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <div class="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center">
                                                 <span class="text-gray-500 text-xs">No Logo</span>
                                             </div>
                                         @endif
@@ -83,6 +132,25 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-gray-900">{{ Str::limit($project->description, 50) }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($project->manager)
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-2">
+                                                    <span class="text-white text-xs font-bold">
+                                                        {{ substr($project->manager->name, 0, 2) }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">{{ $project->manager->name }}
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">{{ $project->manager->email }}</div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <span class="text-sm text-gray-500 italic">No manager assigned</span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         <div>Start: {{ $project->start_date->format('M d, Y') }}</div>
@@ -114,7 +182,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-500">
                                         @if($canManageProjects)
                                             No projects found. <a href="{{ route('projects.create') }}"
                                                 class="text-blue-600 hover:text-blue-900">Create your first project</a>

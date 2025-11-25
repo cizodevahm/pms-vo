@@ -9,11 +9,25 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::withCount('tasks')->paginate(10);
+        $query = Project::with('manager')->withCount('tasks');
+
+        // Filter by project manager if specified
+        if ($request->filled('manager_id')) {
+            $query->where('manager_id', $request->manager_id);
+        }
+
+        $projects = $query->paginate(10)->withQueryString();
         $canManageProjects = Auth::user()->canManageProjects();
-        return view('projects.index', compact('projects', 'canManageProjects'));
+
+        // Get all project managers for the filter dropdown
+        $projectManagers = \App\Models\User::where('role', 'Project Manager')
+            ->whereHas('managedProjects')
+            ->orderBy('name')
+            ->get();
+
+        return view('projects.index', compact('projects', 'canManageProjects', 'projectManagers'));
     }
 
     public function create()
@@ -44,6 +58,9 @@ class ProjectController extends Controller
         if ($request->hasFile('logo')) {
             $validated['logo'] = $request->file('logo')->store('projects', 'public');
         }
+
+        // Set the current user as the project manager
+        $validated['manager_id'] = Auth::id();
 
         Project::create($validated);
 
