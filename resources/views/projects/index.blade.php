@@ -42,8 +42,8 @@
 
             <x-card>
                 <!-- Project Manager Filter -->
-                <div class="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                    <div class="flex items-center space-x-4">
+                <div class="mb-6 flex flex-col sm:flex-row gap-4 items-start">
+                    <div class="flex justify-end space-x-4 mb-6">
                         <form method="GET" action="{{ route('projects.index') }}" class="flex items-center space-x-3">
                             <label for="manager_filter" class="text-sm font-medium text-gray-700">Filter by Project
                                 Manager:</label>
@@ -120,9 +120,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($project->logo)
                                             <img src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
-                                                class=" w-8 h-8 rounded-lg object-cover">
+                                                class="w-16 h-16 rounded-lg object-cover">
                                         @else
-                                            <div class="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
                                                 <span class="text-gray-500 text-xs">No Logo</span>
                                             </div>
                                         @endif
