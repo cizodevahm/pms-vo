@@ -44,7 +44,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-end">
+                    <div class="flex items-end mt-3">
                         <x-button type="submit" class="mr-2">Filter</x-button>
                         <a href="{{ route('tasks.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
                             Clear
@@ -91,7 +91,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('tasks.show', $task) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                                            <a href="{{ route('tasks.show', $task) }}" class="text-indigo-600 hover:text-indigo-900 px-2">View</a>
                                             @if($task->canBeEditedBy(auth()->user()))
                                                 <a href="{{ route('tasks.edit', $task) }}" class="text-yellow-600 hover:text-yellow-900">Edit</a>
                                             @endif
@@ -136,7 +136,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-end">
+                    <div class="flex items-end mt-3">
                         <x-button type="submit" class="mr-2">Filter</x-button>
                         <a href="{{ route('tasks.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
                             Clear
@@ -145,7 +145,7 @@
                 </form>
 
                 <!-- All Tasks Table -->
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto ">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -188,7 +188,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('tasks.show', $task) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
+                                            <a href="{{ route('tasks.show', $task) }}" class="text-indigo-600 hover:text-indigo-900 px-2">View</a>
                                             @if($task->canBeEditedBy(auth()->user()))
                                                 <a href="{{ route('tasks.edit', $task) }}" class="text-yellow-600 hover:text-yellow-900">Edit</a>
                                             @endif
@@ -196,7 +196,7 @@
                                                 <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                                    <button type="submit" class="text-red-600 hover:text-red-900 px-2">Delete</button>
                                                 </form>
                                             @endif
                                         </div>

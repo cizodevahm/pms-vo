@@ -65,12 +65,13 @@
                 <div class="space-y-6">
                     <!-- Project Info -->
                     <x-card title="Project">
-                        <div class="flex items-center space-x-3">
+                        <div class="flex flex-col  items-start space-x-3">
                             @if($task->project->logo)
-                                <img src="{{ asset('storage/' . $task->project->logo) }}" alt="{{ $task->project->name }}"
-                                    class="w-12 h-12 rounded-lg object-cover">
+                                <img width="300" src="{{ asset('storage/' . $task->project->logo) }}" alt="{{ $task->project->name }}"
+                                    class="rounded-lg object-cover">
                             @endif
-                            <div>
+                            <div class="mt-3
+                            ">
                                 <h3 class="text-sm font-medium text-gray-900">{{ $task->project->name }}</h3>
                                 <p class="text-sm text-gray-500">{{ Str::limit($task->project->description, 100) }}</p>
                             </div>
@@ -86,21 +87,21 @@
                     <!-- User Info -->
                     <x-card title="Assigned To">
                         <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                            <!-- <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
                                 <span
-                                    class="text-gray-500 text-sm font-medium">{{ substr($task->user->name, 0, 2) }}</span>
-                            </div>
+                                    class="text-gray-500 text-sm m-3 font-medium">{{ substr($task->user->name, 0, 2) }}</span>
+                            </div> -->
                             <div>
                                 <h3 class="text-sm font-medium text-gray-900">{{ $task->user->name }}</h3>
                                 <p class="text-sm text-gray-500">{{ $task->user->role }}</p>
                                 <p class="text-sm text-gray-500">{{ $task->user->email }}</p>
                             </div>
                         </div>
-                        <div class="mt-3">
+                        <!-- <div class="mt-3">
                             <span class="text-gray-500 text-sm">
                                 User Profile
                             </span>
-                        </div>
+                        </div> -->
                     </x-card>
 
                     <!-- Task Meta -->

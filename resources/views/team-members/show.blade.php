@@ -30,10 +30,10 @@
                                 <img src="{{ asset('storage/' . $user->teamMember->profile_photo) }}"
                                     alt="{{ $user->name }}" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
                             @else
-                                <div
-                                    class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span class="text-gray-500 text-2xl font-medium">{{ substr($user->name, 0, 2) }}</span>
-                                </div>
+                                <!-- <div
+                                                                                                                                                                                                                            class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                                                                                                                                                                                            <span class="text-gray-500 text-2xl font-medium">{{ substr($user->name, 0, 2) }}</span>
+                                                                                                                                                                                                                        </div> -->
                             @endif
 
                             <h3 class="text-xl font-medium text-gray-900 mb-1">{{ $user->name }}</h3>
@@ -60,12 +60,12 @@
                 </div>
 
                 <!-- Tasks -->
-                <div class="lg:col-span-2">
+                <div class="lg:col-span-2 ">
                     <x-card title="Assigned Tasks">
                         @if($user->tasks->count() > 0)
                             <div class="space-y-4">
                                 @foreach($user->tasks as $task)
-                                    <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="border border-gray-200 mt-3 rounded-lg p-4">
                                         <div class="flex justify-between items-start mb-2">
                                             <div class="flex-1">
                                                 <h4 class="text-sm font-medium text-gray-900">{{ $task->title }}</h4>

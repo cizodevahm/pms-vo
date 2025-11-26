@@ -25,9 +25,9 @@
                                     <img src="{{ asset('storage/' . $user->teamMember->profile_photo) }}" alt="{{ $user->name }}"
                                         class="w-16 h-16 rounded-full object-cover">
                                 @else
-                                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                                    <!-- <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
                                         <span class="text-gray-500 text-lg font-medium">{{ substr($user->name, 0, 2) }}</span>
-                                    </div>
+                                    </div> -->
                                 @endif
                                 <div class="flex-1">
                                     <h3 class="text-lg font-medium text-gray-900">{{ $user->name }}</h3>

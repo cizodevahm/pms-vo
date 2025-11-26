@@ -25,16 +25,16 @@
                     <x-card title="Project Details">
                         <div class="space-y-6">
                             <!-- Project Info -->
-                            <div class="flex items-start space-x-4">
+                            <div class="flex flex-col items-start space-x-4">
                                 @if($project->logo)
-                                    <img src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
-                                        class="w-20 h-20 rounded-lg object-cover">
+                                    <img width="300" src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
+                                        class="rounded-lg object-cover">
                                 @else
                                     <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
                                         <span class="text-gray-500 text-sm">No Logo</span>
                                     </div>
                                 @endif
-                                <div class="flex-1">
+                                <div class="flex-1 mt-3">
                                     <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $project->name }}</h3>
                                     <p class="text-gray-700">{{ $project->description }}</p>
                                 </div>
@@ -42,19 +42,19 @@
 
                             <!-- Project Timeline -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-gray-200">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Start Date</label>
-                                    <p class="mt-1 text-sm text-gray-900">{{ $project->start_date->format('M d, Y') }}
+                                <div class="flex items-center ">
+                                    <label class="block text-sm  font-semibold  text-gray-700 ">Start Date: </label>
+                                    <p class="mt-1 text-sm text-gray-900 px-2">{{ $project->start_date->format('M d, Y') }}
                                     </p>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">End Date</label>
-                                    <p class="mt-1 text-sm text-gray-900">{{ $project->end_date->format('M d, Y') }}</p>
+                                <div class="flex items-center ">
+                                    <label class="block text-sm font-semibold text-gray-700">End Date: </label>
+                                    <p class="mt-1 text-sm text-gray-900 px-2">{{ $project->end_date->format('M d, Y') }}</p>
                                 </div>
                             </div>
 
                             <!-- Project Stats -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-6 border-t border-gray-200">
+                            <div class="flex flex-row flex-wrap  justify-between items-center  pt-6 border-t border-gray-200">
                                 @php
                                     $totalTasks = $project->tasks->count();
                                     $pendingTasks = $project->tasks->where('status', 'Pending')->count();
@@ -96,7 +96,8 @@
                             @if($project->tasks->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($project->tasks as $task)
-                                        <div class="border border-gray-200 rounded-lg p-4">
+                                        <div class="border border-gray-200 rounded-lg p-4 mt-3
+                                        ">
                                             <div class="flex justify-between items-start mb-2">
                                                 <div class="flex-1">
                                                     <h4 class="text-sm font-medium text-gray-900">{{ $task->title }}</h4>
@@ -173,9 +174,9 @@
                                     <span class="text-gray-500">Progress:</span>
                                     <span class="text-gray-900">{{ $progress }}%</span>
                                 </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-600 h-2 rounded-full" style="width: {{ $progress }}%"></div>
-                                </div>
+                                <!-- <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-black h-2 rounded-full" style="width: {{ $progress }}%"></div>
+                                </div> -->
                             </div>
                         </div>
                     </x-card>
@@ -196,9 +197,9 @@
                                             <img src="{{ asset('storage/' . $member->profile_photo) }}" alt="{{ $member->name }}"
                                                 class="w-8 h-8 rounded-full object-cover">
                                         @else
-                                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                                            <!-- <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
                                                 <span class="text-gray-500 text-xs">{{ substr($member->name, 0, 2) }}</span>
-                                            </div>
+                                            </div> -->
                                         @endif
                                         <div class="flex-1">
                                             <p class="text-sm font-medium text-gray-900">{{ $member->name }}</p>
