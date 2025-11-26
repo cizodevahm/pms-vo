@@ -87,7 +87,7 @@
                     @endif
                 </div>
 
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto overflow-y-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -136,16 +136,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($project->manager)
                                             <div class="flex items-center">
-                                                <div
-                                                    class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-2">
-                                                    <span class="text-white text-xs font-bold">
-                                                        {{ substr($project->manager->name, 0, 2) }}
-                                                    </span>
-                                                </div>
+
                                                 <div>
                                                     <div class="text-sm font-medium text-gray-900">{{ $project->manager->name }}
                                                     </div>
-                                                    <div class="text-sm text-gray-500">{{ $project->manager->email }}</div>
+                                                    <div class="text-xs text-gray-500">{{ $project->manager->email }}</div>
                                                 </div>
                                             </div>
                                         @else
@@ -163,9 +158,9 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2">
+                                        <div class="flex space-x-2 ">
                                             <a href="{{ route('projects.show', $project) }}"
-                                                class="text-indigo-600 hover:text-indigo-900">View</a>
+                                                class="text-indigo-600 hover:text-indigo-900 px-2">View</a>
                                             @if($canManageProjects)
                                                 <a href="{{ route('projects.edit', $project) }}"
                                                     class="text-yellow-600 hover:text-yellow-900">Edit</a>
@@ -174,7 +169,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="text-red-600 hover:text-red-900">Delete</button>
+                                                        class="text-red-600 hover:text-red-900 px-2">Delete</button>
                                                 </form>
                                             @endif
                                         </div>
