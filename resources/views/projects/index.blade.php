@@ -15,6 +15,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                     {{ session('success') }}
@@ -87,9 +88,13 @@
                     @endif
                 </div>
 
-                <div class="overflow-x-auto overflow-y-auto">
+                <!-- SCROLLABLE TABLE WRAPPER -->
+                <div class="overflow-x-auto overflow-y-auto max-h-[600px]">
+
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+
+                        <!-- Sticky Header -->
+                        <thead class="bg-gray-50 sticky top-0 z-10">
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -114,29 +119,32 @@
                                     Actions</th>
                             </tr>
                         </thead>
+
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse ($projects as $project)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-nowrap ">
                                         @if($project->logo)
-                                            <img src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
-                                                class="w-16 h-16 rounded-lg object-cover">
+                                            <img width="200" src="{{ asset('storage/' . $project->logo) }}" alt="{{ $project->name }}"
+                                                class=" rounded-lg object-cover">
                                         @else
                                             <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
                                                 <span class="text-gray-500 text-xs">No Logo</span>
                                             </div>
                                         @endif
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900">{{ $project->name }}</div>
                                     </td>
+
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-gray-900">{{ Str::limit($project->description, 50) }}</div>
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($project->manager)
                                             <div class="flex items-center">
-
                                                 <div>
                                                     <div class="text-sm font-medium text-gray-900">{{ $project->manager->name }}
                                                     </div>
@@ -147,23 +155,28 @@
                                             <span class="text-sm text-gray-500 italic">No manager assigned</span>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900  ">
                                         <div>Start: {{ $project->start_date->format('M d, Y') }}</div>
                                         <div>End: {{ $project->end_date->format('M d, Y') }}</div>
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             {{ $project->tasks_count }} tasks
                                         </span>
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2 ">
+                                        <div class="flex space-x-2">
                                             <a href="{{ route('projects.show', $project) }}"
                                                 class="text-indigo-600 hover:text-indigo-900 px-2">View</a>
+
                                             @if($canManageProjects)
                                                 <a href="{{ route('projects.edit', $project) }}"
                                                     class="text-yellow-600 hover:text-yellow-900">Edit</a>
+
                                                 <form action="{{ route('projects.destroy', $project) }}" method="POST"
                                                     class="inline" onsubmit="return confirm('Are you sure?')">
                                                     @csrf
@@ -196,6 +209,7 @@
                         {{ $projects->links() }}
                     </div>
                 @endif
+
             </x-card>
         </div>
     </div>
