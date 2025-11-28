@@ -382,7 +382,9 @@
                     --default-font-variation-settings: var(--font-sans--font-variation-settings);
                     --default-mono-font-family: var(--font-mono);
                     --default-mono-font-feature-settings: var(--font-mono--font-feature-settings);
-                    --default-mono-font-variation-settings: var(--font-mono--font-variation-settings)
+                    --default-mono-font-variation-settings: var(--font-mono--font-variation-settings) --container-8xl: 88rem;
+                    --container-9xl: 200px;
+
                 }
             }
 
@@ -420,6 +422,8 @@
                 body {
                     line-height: inherit
                 }
+
+
 
                 hr {
                     height: 0;
@@ -756,6 +760,11 @@
 
                 .h-14\.5 {
                     height: calc(var(--spacing)*14.5)
+                }
+
+                .custom-width {
+                    width: 200px;
+                    height: 200px;
                 }
 
                 .min-h-screen {
