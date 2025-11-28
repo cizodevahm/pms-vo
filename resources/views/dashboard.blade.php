@@ -14,11 +14,12 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-y-6 mb-6">
+            <div class="grid grid-cols-4 gap-2 sm:gap-4 lg:gap-6 mb-6">
 
                 <!-- Total Projects -->
-                <div class="flex items-center border-b border-gray-200  bg-white  p-4 shadow-sm">
-                    <div class="p-2 bg-blue-100 rounded-full">
+                <a href="{{ route('projects.index') }}"
+                    class="flex items-center bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md hover:bg-gray-50 transition-all duration-200 cursor-pointer">
+                    <div class="p-3 bg-blue-100 rounded-full">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
@@ -26,55 +27,56 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <h2 class="text-lg font-semibold text-gray-900">{{ $stats['total_projects'] }}</h2>
-                        <p class="text-gray-600">Total Projects</p>
+                        <h2 class="text-2xl font-bold text-gray-900">{{ $stats['total_projects'] }}</h2>
+                        <p class="text-sm text-gray-600">Total Projects</p>
                     </div>
-                </div>
-
+                </a>
 
                 <!-- Total Tasks -->
-                <div class="flex items-center  bg-white border-b border-gray-200 p-4 shadow-sm mb-10">
-                    <div class="p-2 bg-green-100 rounded-full">
+                <a href="{{ route('tasks.index') }}"
+                    class="flex items-center bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md hover:bg-gray-50 transition-all duration-200 cursor-pointer">
+                    <div class="p-3 bg-green-100 rounded-full">
                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                             </path>
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <h2 class="text-lg font-semibold text-gray-900">{{ $stats['total_tasks'] }}</h2>
-                        <p class="text-gray-600">Total Tasks</p>
+                        <h2 class="text-2xl font-bold text-gray-900">{{ $stats['total_tasks'] }}</h2>
+                        <p class="text-sm text-gray-600">Total Tasks</p>
                     </div>
-                </div>
-
+                </a>
 
                 <!-- Pending Tasks -->
-                <div class="flex items-center  bg-white  border-b border-gray-200 p-4 shadow-sm mb-10">
-                    <div class="p-2 bg-yellow-100 rounded-full">
+                <a href="{{ route('tasks.index') }}"
+                    class="flex items-center bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md hover:bg-gray-50 transition-all duration-200 cursor-pointer">
+                    <div class="p-3 bg-yellow-100 rounded-full">
                         <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <h2 class="text-lg font-semibold text-gray-900">{{ $stats['pending_tasks'] }}</h2>
-                        <p class="text-gray-600">Pending Tasks</p>
+                        <h2 class="text-2xl font-bold text-gray-900">{{ $stats['pending_tasks'] }}</h2>
+                        <p class="text-sm text-gray-600">Pending Tasks</p>
                     </div>
-                </div>
-
+                </a>
 
                 <!-- Completed Tasks -->
-                <div class="flex items-center border-t border-gray-200 bg-white  rounded-b-lg p-4 shadow-sm">
-                    <div class="p-2 bg-purple-100 rounded-full">
+                <a href="{{ route('tasks.index') }}"
+                    class="flex items-center bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md hover:bg-gray-50 transition-all duration-200 cursor-pointer">
+                    <div class="p-3 bg-purple-100 rounded-full">
                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                             </path>
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <h2 class="text-lg font-semibold text-gray-900">{{ $stats['completed_tasks'] }}</h2>
-                        <p class="text-gray-600">Completed Tasks</p>
+                        <h2 class="text-2xl font-bold text-gray-900">{{ $stats['completed_tasks'] }}</h2>
+                        <p class="text-sm text-gray-600">Completed Tasks</p>
                     </div>
-                </div>
+                </a>
 
             </div>
 
